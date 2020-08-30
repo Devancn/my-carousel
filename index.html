@@ -9,7 +9,7 @@
             white-space: nowrap;
             outline: solid 1px blue;
             margin: 0 auto;
-            /* zoom: 0.5; */
+            zoom: 1;
             overflow: hidden;
         }
 
@@ -43,6 +43,7 @@
                     let element = document.createElement('img');
                     if (d === this.data[0]) element.classList.add('我是第0个图片')
                     element.src = d;
+                    element.addEventListener("dragstart", event => event.preventDefault())
                     this.root.appendChild(element);
                 }
 
@@ -68,9 +69,67 @@
 
                         position = nextPosition;
                     }, 16)
+
                     setTimeout(nextPic, 3000)
                 }
-                setTimeout(nextPic, 3000)
+                // setTimeout(nextPic, 3000)
+
+                this.root.addEventListener("mousedown", event => {
+                    let startX = event.clientX, startY = event.clientY;
+
+                    let lastPosition = (position - 1 + this.data.length) % this.data.length;
+                    let nextPosition = (position + 1) % this.data.length;
+
+
+                    let current = this.root.childNodes[position];
+                    let last = this.root.childNodes[lastPosition];
+                    let next = this.root.childNodes[nextPosition];
+
+                    console.log(current, 'current');
+                    console.log(last, 'current');
+                    console.log(next, 'current');
+
+                    current.style.transition = "ease 0s";
+                    last.style.transition = "ease 0s";
+                    next.style.transition = "ease 0s";
+
+                    current.style.transform = `translateX(${- 500 * position}px)`;
+                    last.style.transform = `translateX(${-500 - 500 * lastPosition}px)`;
+                    next.style.transform = `translateX(${500 - 500 * nextPosition}px)`;
+
+                    let move = event => {
+                        console.log(event)
+                        current.style.transform = `translateX(${event.clientX - startX - 500 * position}px)`;
+                        last.style.transform = `translateX(${event.clientX - startX - 500 - 500 * lastPosition}px)`;
+                        next.style.transform = `translateX(${event.clientX - startX + 500 - 500 * nextPosition}px)`;
+                    }
+                    // 处理鼠标up逻辑，如果往左或者往右拖动大于250，则向左或者向右滚动250，否则回到当前位置
+                    let up = event => {
+                        let offset = 0;
+
+                        if (event.clientX - startX > 250) { // 往右
+                            offset = 1;
+                        } else if (event.clientX - startX < -250) { // 往左
+                            offset = -1;
+                        }
+
+                        // 播放动画打开
+                        current.style.transition = "";
+                        last.style.transition = "";
+                        next.style.transition = "";
+                        // 播放动画
+                        current.style.transform = `translateX(${offset * 500 - 500 * position}px)`;
+                        last.style.transform = `translateX(${offset * 500 - 500 - 500 * lastPosition}px)`;
+                        next.style.transform = `translateX(${offset * 500 + 500 - 500 * nextPosition}px)`;
+                        // 根据表现同步position
+                        position = (position - offset + this.data.length) % this.data.length;;
+
+                        document.removeEventListener("mousemove", move);
+                        document.removeEventListener("mouseup", up);
+                    }
+                    document.addEventListener("mousemove", move);
+                    document.addEventListener("mouseup", up);
+                })
             }
         }
 
