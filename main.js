@@ -1,41 +1,5 @@
-function createElement(Cls, attributes, ...children) {
-    let o;
-    if (typeof Cls === 'string') {
-        o = new Wrapper(Cls)
-    } else {
-        o = new Cls({
-            timer: {}
-        });
-    }
+import { createElement, Text, Wrapper } from './createElement'
 
-    for (let name in attributes) {
-        o.setAttribute(name, attributes[name])
-    }
-
-    let visit = children => {
-        for (let child of children) {
-            if (typeof child === 'object' && child instanceof Array) {
-                visit(child)
-                continue
-            }
-            if (typeof child === 'string')
-                child = new Text(child)
-            o.appendChild(child)
-        }
-    }
-    visit(children)
-    return o;
-}
-
-class Text {
-    constructor(text) {
-        this.children = [];
-        this.root = document.createTextNode(text);
-    }
-    mountTo(parent) {
-        parent.appendChild(this.root);
-    }
-}
 
 class Carousel {
     constructor(config) {
@@ -65,31 +29,7 @@ class Carousel {
 
 }
 
-class Wrapper {
-    constructor(type) {
-        this.children = [];
-        this.root = document.createElement(type);
-    }
 
-    setAttribute(name, value) {
-        this.root.setAttribute(name, value)
-    }
-
-    appendChild(child) {
-        this.children.push(child)
-    }
-
-    addEventListener() {
-        this.root.addEventListener(...arguments)
-    }
-
-    mountTo(parent) {
-        parent.appendChild(this.root)
-        for (let child of this.children) {
-            child.mountTo(this.root)
-        }
-    }
-}
 let component = <Carousel data={[
     "https://static001.geekbang.org/resource/image/bb/21/bb38fb7c1073eaee1755f81131f11d21.jpg",
     "https://static001.geekbang.org/resource/image/1b/21/1b809d9a2bdf3ecc481322d7c9223c21.jpg",
