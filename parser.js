@@ -1,3 +1,4 @@
+// https://html.spec.whatwg.org/multipage/parsing.html#tokenization
 let currentToken = null;
 let currentAttribute = null;
 
