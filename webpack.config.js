@@ -23,6 +23,12 @@ const webpackConfig = {
                         ]
                     }
                 }
+            },
+            {
+                test: /\.view/,
+                use: {
+                    loader: require.resolve("./myloader.js")
+                }
             }
         ]
     },

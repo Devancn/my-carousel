@@ -1,7 +1,7 @@
 import { createElement, Text, Wrapper } from './createElement'
+import { Carousel } from './carousel.view';
 
-
-class Carousel {
+/*class Carousel {
     constructor(config) {
         this.children = [];
         this.attributes = new Map();
@@ -58,7 +58,7 @@ class Carousel {
 
 }
 
-
+*/
 let component = <Carousel data={[
     "https://static001.geekbang.org/resource/image/bb/21/bb38fb7c1073eaee1755f81131f11d21.jpg",
     "https://static001.geekbang.org/resource/image/1b/21/1b809d9a2bdf3ecc481322d7c9223c21.jpg",
