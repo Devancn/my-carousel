@@ -1,1 +1,1 @@
-# my-carousel
+### 一个支持手势鼠标滑动的轮播组件，通过自定义loader解析类似Vue的SFC(Single File Components)组件模板解析成js组件代码
