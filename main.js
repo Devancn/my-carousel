@@ -1,7 +1,11 @@
 import { createElement, Text, Wrapper } from './createElement'
-import { Carousel } from './carousel.view';
 
-/*class Carousel {
+import { Timeline, Animation } from './animation'
+import { ease } from './cubicBezier'
+
+// import { Carousel } from './carousel.view';
+
+class Carousel {
     constructor(config) {
         this.children = [];
         this.attributes = new Map();
@@ -22,27 +26,30 @@ import { Carousel } from './carousel.view';
         })
 
         let position = 0;
+
+        let timeLine = new Timeline;
+        timeLine.start();
         let nextPic = () => {
             let nextPosition = (position + 1) % this.data.length;
 
             let current = children[position];
             let next = children[nextPosition]
 
-            current.style.transition = "ease 0s";
-            next.style.transition = "ease 0s";
+            let currentAnimation = new Animation(current.style, "transform",
+                -100 * position,
+                -100 - 100 * position,
+                500, 0, ease, v => `translateX(${v}%)`
+            );
+            let nextAnimation = new Animation(next.style, "transform",
+                100 - 100 * nextPosition,
+                -100 * nextPosition,
+                500, 0, ease, v => `translateX(${v}%)`
+            );
 
-            current.style.transform = `translateX(${-100 * position}%)`;
-            next.style.transform = `translateX(${100 - 100 * nextPosition}%)`;
+            timeLine.add(currentAnimation);
+            timeLine.add(nextAnimation);
 
-            setTimeout(function () {
-                current.style.transition = "";
-                next.style.transition = "";
-
-                current.style.transform = `translateX(${-100 - 100 * position}%)`;
-                next.style.transform = `translateX(${-100 * nextPosition}%)`;
-
-                position = nextPosition;
-            }, 16)
+            position = nextPosition;
 
             setTimeout(nextPic, 3000)
         }
@@ -58,7 +65,6 @@ import { Carousel } from './carousel.view';
 
 }
 
-*/
 let component = <Carousel data={[
     "https://static001.geekbang.org/resource/image/bb/21/bb38fb7c1073eaee1755f81131f11d21.jpg",
     "https://static001.geekbang.org/resource/image/1b/21/1b809d9a2bdf3ecc481322d7c9223c21.jpg",
