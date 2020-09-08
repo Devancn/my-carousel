@@ -28,7 +28,9 @@ class Carousel {
         let position = 0;
 
         let timeLine = new Timeline;
+        window.xtimeLime = timeLine;
         timeLine.start();
+
         let nextPic = () => {
             let nextPosition = (position + 1) % this.data.length;
 
@@ -51,7 +53,7 @@ class Carousel {
 
             position = nextPosition;
 
-            setTimeout(nextPic, 3000)
+            window.xStopHandler = setTimeout(nextPic, 3000)
         }
         setTimeout(nextPic, 3000)
 
