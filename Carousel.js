@@ -52,10 +52,9 @@ export class Carousel {
                 let nextTransformValue = 500 - 500 * nextPosition + offset;
 
                 let dx = event.clientX - event.startX;
-                console.log(`translateX(${lastTransformValue + dx})px`);
-                lastElement.style.transform = `translateX(${lastTransformValue + dx})px`;
-                currentElement.style.transform = `translateX(${currentTransformValue + dx})px`;
-                nextElement.style.transform = `translateX(${nextTransformValue + dx})px`;
+                lastElement.style.transform = `translateX(${lastTransformValue + dx}px)`;
+                currentElement.style.transform = `translateX(${currentTransformValue + dx}px)`;
+                nextElement.style.transform = `translateX(${nextTransformValue + dx}px)`;
             }
             let element = <img src={url} onStart={onStart} onPan={onPan} enableGesture={true} />;
             element.style.transform = "translateX(0px)"
