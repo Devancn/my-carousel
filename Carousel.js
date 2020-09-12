@@ -100,6 +100,9 @@ export class Carousel {
                 timeLine.add(currentAnimation);
                 timeLine.add(nextAnimation);
 
+                position = (position - direction + this.data.length) % this.data.length;
+
+                nextPicStopHandler = setTimeout(nextPic, 3000)
             }
             let element = <img src={url} onStart={onStart} onPan={onPan} onPanend={onPanend} enableGesture={true} />;
             element.style.transform = "translateX(0px)"
