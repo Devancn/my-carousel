@@ -3,6 +3,8 @@ import { createElement, Text, Wrapper } from './createElement'
 import { Timeline, Animation } from './animation'
 import { ease } from './cubicBezier'
 
+import css from "./carousel.css"
+
 
 export class Carousel {
     constructor(config) {

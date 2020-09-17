@@ -9,7 +9,6 @@ export function createElement(Cls, attributes, ...children) {
             timer: {}
         });
     }
-
     for (let name in attributes) {
         o.setAttribute(name, attributes[name])
     }
@@ -38,6 +37,7 @@ export class Text {
     mountTo(parent) {
         parent.appendChild(this.root);
     }
+
 }
 
 export class Wrapper {
@@ -58,7 +58,9 @@ export class Wrapper {
             enableGesture(this.root)
         }
     }
-
+    getAttribute(name) {
+        return this.root.getAttribute(name)
+    }
     appendChild(child) {
         this.children.push(child)
     }
@@ -69,6 +71,14 @@ export class Wrapper {
 
     get style() {
         return this.root.style;
+    }
+
+    get classList() {
+        return this.root.classList;
+    }
+
+    set innerText(text) {
+        return this.root.innerText = text;
     }
 
     mountTo(parent) {

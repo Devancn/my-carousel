@@ -6,6 +6,7 @@ const path = require('path');
 //  */
 const webpackConfig = {
     mode: 'development',
+    devtool: 'cheap-module-source-map',
     entry: './main.js',
     module: {
         rules: [
@@ -28,6 +29,12 @@ const webpackConfig = {
                 test: /\.view/,
                 use: {
                     loader: require.resolve("./myloader.js")
+                }
+            },
+            {
+                test: /\.css/,
+                use: {
+                    loader: require.resolve("./cssloader.js")
                 }
             }
         ]
