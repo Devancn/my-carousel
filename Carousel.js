@@ -118,12 +118,21 @@ export class Carousel {
         let nextPic = () => {
             let nextPosition = (position + 1) % this.data.length;
 
+            // 当前图片位置
             let current = children[position];
+            // 下一张图片位置
             let next = children[nextPosition]
-
+            /**
+             * 轮播步骤：
+             * 1. 轮播时图片时两两一组进行
+             * 2. 把当前展示的图向左滑动一个位置
+             * 3. 把当前
+             */
+            let start = -100 * position;
+            let end = -100 - 100 * position;
             let currentAnimation = new Animation(current.style, "transform",
-                -100 * position,
-                -100 - 100 * position,
+                start,
+                end,
                 500, 0, ease, v => `translateX(${5 * v}px)`
             );
             let nextAnimation = new Animation(next.style, "transform",
